@@ -13,7 +13,7 @@ public class ClubMapper
             Description = dto.Description,
             Name = dto.Name,
             MaxAthletes = dto.MaxAthletes,
-            SportTypeId = dto.SportTypeId
+            SportTypeID = dto.SportTypeId
         };
 
         return club;
@@ -27,7 +27,7 @@ public class ClubMapper
             Description = club.Description,
             Name = club.Name,
             MaxAthletes = club.MaxAthletes,
-            SportTypeId = club.SportTypeId
+            SportTypeId = club.SportTypeID
         };
 
         return dto;

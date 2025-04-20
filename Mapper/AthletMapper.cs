@@ -10,7 +10,7 @@ public class AthletMapper
         {
             Id = athlet.ID,
             Fio = athlet.Fio,
-            SportTypeId = athlet.SportTypeId,
+            SportTypeId = athlet.SportTypeID,
             ExpirenceWorkDays = athlet.ExpirenceWorkDays
         };
         return dto;
@@ -22,7 +22,7 @@ public class AthletMapper
         {
             ID = dto.Id,
             Fio = dto.Fio,
-            SportTypeId = dto.SportTypeId,
+            SportTypeID = dto.SportTypeId,
             ExpirenceWorkDays = dto.ExpirenceWorkDays
         };
         return athlet;

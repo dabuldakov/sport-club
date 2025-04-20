@@ -23,7 +23,7 @@ public class RegistryClubService(
         var found = _registryClubRepository.Find(new RegClubPk (document.ClubID, document.AthletID ));
         if (found != null)
         {
-            throw new ArgumentNullException("Спортсмен уже добавлен в спортивный клуб.");
+            throw new ArgumentException("Спортсмен уже добавлен в спортивный клуб.");
         }
         //transaction
         _membershipRepository.Save(document);
@@ -36,7 +36,7 @@ public class RegistryClubService(
         var found = _registryClubRepository.Find(new RegClubPk(document.ClubID, document.AthletID));
         if (found == null)
         {
-            throw new ArgumentNullException("Спортсмен не принадлежит спортивному клубу.");
+            throw new ArgumentException("Спортсмен не принадлежит спортивному клубу.");
         }
         //transaction
         _exclusionRepository.Save(document);

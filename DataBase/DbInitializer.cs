@@ -9,14 +9,14 @@ public class DbInitializer(ApplicationContext applicationContext)
     {
         var clubs = new[]
         {
-            new Club { Name = "Club A", Description = "Description for Club A", SportTypeId = 1, MaxAthletes = 35 },
-            new Club { Name = "Club B", Description = "Description for Club B", SportTypeId = 2, MaxAthletes = 100 }
+            new Club { Name = "Club A", Description = "Description for Club A", SportTypeID = 1, MaxAthletes = 35 },
+            new Club { Name = "Club B", Description = "Description for Club B", SportTypeID = 2, MaxAthletes = 100 }
         };
 
         var athlets = new[]
         {
-            new Athlet { Fio = "Athlet One", ExpirenceWorkDays = 5, SportTypeId = 1 },
-            new Athlet { Fio = "Athlet Two", ExpirenceWorkDays = 3, SportTypeId = 2 }
+            new Athlet { Fio = "Athlet One", ExpirenceWorkDays = 5, SportTypeID = 1 },
+            new Athlet { Fio = "Athlet Two", ExpirenceWorkDays = 3, SportTypeID = 2 }
         };
 
         var sportTypes = new[]
