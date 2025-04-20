@@ -1,5 +1,6 @@
 # Ignore history files
-*.history
+.history/
+.vscode/
 bin/
 obj/
 [Dd]ebug/
