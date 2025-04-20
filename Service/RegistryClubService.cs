@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using SportClubApi.Models;
 using SportClubApi.Models.Registry;
 using SportClubApi.Repositoory;
@@ -13,14 +14,14 @@ public class RegistryClubService(
     private readonly ExcclusionRepository _exclusionRepository = excclusionRepository;
     private readonly RegistryClubRepository _registryClubRepository = registryClubRepository;
 
-    public MembershipDocument SaveMembershipDocument(MembershipDocument document)
+    public async Task<MembershipDocument> SaveMembershipDocument(MembershipDocument document)
     {
         var registry = new RegistryClub
         {
             AthletID = document.AthletID,
             ClubID = document.ClubID
         };
-        var found = _registryClubRepository.Find(new RegClubPk (document.ClubID, document.AthletID ));
+        var found = await _registryClubRepository.GetByAthletIdFirstAsync(document.AthletID);
         if (found != null)
         {
             throw new ArgumentException("Спортсмен уже добавлен в спортивный клуб.");
@@ -31,9 +32,9 @@ public class RegistryClubService(
         return document;
     }
 
-    public ExclusionDocument SaveExclusionDocument(ExclusionDocument document)
+    public async Task<ExclusionDocument> SaveExclusionDocument(ExclusionDocument document)
     {
-        var found = _registryClubRepository.Find(new RegClubPk(document.ClubID, document.AthletID));
+        var found = await _registryClubRepository.GetByAthletIdFirstAsync(document.AthletID);
         if (found == null)
         {
             throw new ArgumentException("Спортсмен не принадлежит спортивному клубу.");

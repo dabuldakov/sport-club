@@ -21,9 +21,12 @@ public class RegistryClubRepository(ApplicationContext context)
         _context.SaveChanges();
     }
 
-    public RegistryClub? Find(RegClubPk pk)
+    
+    public async Task<RegistryClub?> GetByAthletIdFirstAsync(long athletId)
     {
-        return _context.RegistryClubs.Find(pk.ClubId, pk.AthletId);
+        return await _context.RegistryClubs
+            .Where(registry => registry.AthletID == athletId)
+            .FirstOrDefaultAsync();
     }
 
     public async Task<List<Athlet>> GetAthletsByClubIdAsync(long clubId)

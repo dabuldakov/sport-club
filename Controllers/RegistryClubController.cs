@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Internal;
@@ -23,20 +24,20 @@ public class RegistryClubController(
 
     [HttpPost]
     [Route(ApiRoutes.Registry.Membership)]
-    public ActionResult<long> SaveMembershipDocument(MembershipDocumentDto dto)
+    public async Task<ActionResult<long>> SaveMembershipDocument(MembershipDocumentDto dto)
     {
         var request = _registryMapper.ToDomainMembership(dto);
-        var result = _registryMapper.ToDtoMembership(service.SaveMembershipDocument(request));
-        return Ok(result.Id);
+        var result = await service.SaveMembershipDocument(request);
+        return Ok(result.ID);
     }
 
     [HttpPost]
     [Route(ApiRoutes.Registry.Exclusion)]
-    public ActionResult<long> SaveExclusionDocument(ExclusionDocumentDto dto)
+    public async Task<ActionResult<long>> SaveExclusionDocument(ExclusionDocumentDto dto)
     {
         var request = _registryMapper.ToDomainExclusion(dto);
-        var result = _registryMapper.ToDtoExclusion(service.SaveExclusionDocument(request));
-        return Ok(result.Id);
+        var result = await service.SaveExclusionDocument(request);
+        return Ok(result.ID);
     }
 
     [HttpGet]

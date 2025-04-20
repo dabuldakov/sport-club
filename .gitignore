@@ -1,3 +1,6 @@
 # Ignore history files
 *.history
-*.obj
+bin/
+obj/
+[Dd]ebug/
+*.dll
