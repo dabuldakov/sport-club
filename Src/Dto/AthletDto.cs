@@ -6,6 +6,6 @@ public class AthletDto
 {
     public long Id { get; set; }
     public required string Fio { get; set; }
-    public long SportTypeId { get; set; }
-    public int ExpirenceWorkDays { get; set; }
+    public required long SportTypeId { get; set; }
+    public required int ExpirenceWorkDays { get; set; }
 }

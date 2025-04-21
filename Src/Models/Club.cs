@@ -7,7 +7,7 @@ public class Club()
     public long ID { get; set; }
     public required string Name { get; set; }
     public required string Description { get; set; }
-    public long SportTypeID { get; set; }
-    public int MaxAthletes { get; set; }
+    public required long SportTypeID { get; set; }
+    public required int MaxAthletes { get; set; }
     public ICollection<RegistryClub> RegistryClubs { get; set; } = [];
 }

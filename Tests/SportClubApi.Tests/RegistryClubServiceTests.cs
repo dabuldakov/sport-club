@@ -32,7 +32,7 @@ public class RegistryClubServiceTests
         var document = CreateTestMembershipDocument();
         _registryClubRepositoryMock
             .Setup(repo => repo.GetByAthletIdFirstAsync(document.AthletID))
-            .ReturnsAsync(new RegistryClub());
+            .ReturnsAsync(new RegistryClub { AthletID = 1, ClubID = 1, CreateDate = DateTime.Now });
 
         // Act & Assert
         await Assert.ThrowsAsync<ArgumentException>(() => _service.SaveMembershipDocument(document));
@@ -74,7 +74,7 @@ public class RegistryClubServiceTests
     {
         // Arrange
         var document = CreateTestExclusionDocument();
-        var registryClub = new RegistryClub { AthletID = 1, ClubID = 1 };
+        var registryClub = new RegistryClub { AthletID = 1, ClubID = 1, CreateDate = DateTime.Now };
         _registryClubRepositoryMock
             .Setup(repo => repo.GetByAthletIdFirstAsync(document.AthletID))
             .ReturnsAsync(registryClub);

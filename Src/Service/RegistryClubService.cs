@@ -18,7 +18,8 @@ public class RegistryClubService(
         var registry = new RegistryClub
         {
             AthletID = document.AthletID,
-            ClubID = document.ClubID
+            ClubID = document.ClubID,
+            CreateDate = DateTime.Now
         };
         var found = await _registryClubRepository.GetByAthletIdFirstAsync(document.AthletID);
         if (found != null)
