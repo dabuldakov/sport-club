@@ -1,18 +1,17 @@
-using System.Threading.Tasks;
+using SportClubApi.Interface;
 using SportClubApi.Models;
 using SportClubApi.Models.Registry;
-using SportClubApi.Repositoory;
 
 namespace SportClubApi.Service;
 
 public class RegistryClubService(
-    MembershipRepository membershipRepository,
-    ExcclusionRepository excclusionRepository,
-    RegistryClubRepository registryClubRepository)
+    IMembershipRepository membershipRepository,
+    IExclusionRepository excclusionRepository,
+    IRegistryClubRepository registryClubRepository)
 {
-    private readonly MembershipRepository _membershipRepository = membershipRepository;
-    private readonly ExcclusionRepository _exclusionRepository = excclusionRepository;
-    private readonly RegistryClubRepository _registryClubRepository = registryClubRepository;
+    private readonly IMembershipRepository _membershipRepository = membershipRepository;
+    private readonly IExclusionRepository _exclusionRepository = excclusionRepository;
+    private readonly IRegistryClubRepository _registryClubRepository = registryClubRepository;
 
     public async Task<MembershipDocument> SaveMembershipDocument(MembershipDocument document)
     {
@@ -45,7 +44,8 @@ public class RegistryClubService(
         return document;
     }
 
-    public Task<List<Athlet>> GetAthletsInClub(long clubId) {
+    public Task<List<Athlet>> GetAthletsInClub(long clubId)
+    {
         return _registryClubRepository.GetAthletsByClubIdAsync(clubId);
     }
 }

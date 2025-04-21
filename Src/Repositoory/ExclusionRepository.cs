@@ -1,9 +1,10 @@
 using SportClubApi.DataBase;
+using SportClubApi.Interface;
 using SportClubApi.Models.Registry;
 
 namespace SportClubApi.Repositoory;
 
-public class ExcclusionRepository(ApplicationContext context)
+public class ExcclusionRepository(ApplicationContext context) : IExclusionRepository
 {
     private readonly ApplicationContext _context = context;
 

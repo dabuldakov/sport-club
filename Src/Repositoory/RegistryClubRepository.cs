@@ -1,11 +1,12 @@
 using Microsoft.EntityFrameworkCore;
 using SportClubApi.DataBase;
+using SportClubApi.Interface;
 using SportClubApi.Models;
 using SportClubApi.Models.Registry;
 
 namespace SportClubApi.Repositoory;
 
-public class RegistryClubRepository(ApplicationContext context)
+public class RegistryClubRepository(ApplicationContext context) : IRegistryClubRepository
 {
     private readonly ApplicationContext _context = context;
 

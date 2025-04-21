@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using SportClubApi.Controllers;
 using SportClubApi.DataBase;
+using SportClubApi.Interface;
 using SportClubApi.Mapper;
 using SportClubApi.Repositoory;
 using SportClubApi.Service;
@@ -21,9 +22,9 @@ builder.Services.AddScoped<ClubMapper>();
 builder.Services.AddScoped<AthletMapper>();
 builder.Services.AddScoped<RegistryDocumentMapper>();
 builder.Services.AddScoped<RegistryClubService>();
-builder.Services.AddScoped<MembershipRepository>();
-builder.Services.AddScoped<ExcclusionRepository>();
-builder.Services.AddScoped<RegistryClubRepository>();
+builder.Services.AddScoped<IMembershipRepository, MembershipRepository>();
+builder.Services.AddScoped<IExclusionRepository, ExcclusionRepository>();
+builder.Services.AddScoped<IRegistryClubRepository, RegistryClubRepository>();
 builder.Services.AddScoped<DbInitializer>();
 
 var app = builder.Build();

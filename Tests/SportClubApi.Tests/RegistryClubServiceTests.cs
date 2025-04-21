@@ -1,18 +1,19 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.CookiePolicy;
 using Moq;
+using SportClubApi.Interface;
 using SportClubApi.Models;
 using SportClubApi.Models.Registry;
-using SportClubApi.Repositoory;
 using SportClubApi.Service;
 using Xunit;
 
 public class RegistryClubServiceTests
 {
-    private readonly Mock<MembershipRepository> _membershipRepositoryMock = new();
-    private readonly Mock<ExcclusionRepository> _exclusionRepositoryMock = new();
-    private readonly Mock<RegistryClubRepository> _registryClubRepositoryMock = new();
+    private readonly Mock<IMembershipRepository> _membershipRepositoryMock = new();
+    private readonly Mock<IExclusionRepository> _exclusionRepositoryMock = new();
+    private readonly Mock<IRegistryClubRepository> _registryClubRepositoryMock = new();
     private readonly RegistryClubService _service;
 
     public RegistryClubServiceTests()

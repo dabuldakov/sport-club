@@ -1,9 +1,10 @@
 using SportClubApi.DataBase;
+using SportClubApi.Interface;
 using SportClubApi.Models.Registry;
 
 namespace SportClubApi.Repositoory;
 
-public class MembershipRepository(ApplicationContext context)
+public class MembershipRepository(ApplicationContext context) : IMembershipRepository
 {
     private readonly ApplicationContext _context = context;
 
@@ -16,9 +17,5 @@ public class MembershipRepository(ApplicationContext context)
 
     public void Delete(MembershipDocument document) {
         _context.Set<MembershipDocument>().Remove(document);
-    }
-
-    public MembershipDocument? Find(MembershipDocument document) {
-        return _context.MembershipDocuments.Find(document.ID);
     }
 }
