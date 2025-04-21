@@ -1,0 +1,35 @@
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SportClubApi", "Src\SportClubApi.csproj", "{1AC51370-1E40-4952-E567-33519998A8AD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{870AA4BB-D49B-481F-ADD4-454FD5FAE867}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SportClubApi.Tests", "Tests\SportClubApi.Tests\SportClubApi.Tests.csproj", "{3307D33C-3E0D-4D69-85C4-B8E7BAFE85BD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1AC51370-1E40-4952-E567-33519998A8AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AC51370-1E40-4952-E567-33519998A8AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AC51370-1E40-4952-E567-33519998A8AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AC51370-1E40-4952-E567-33519998A8AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3307D33C-3E0D-4D69-85C4-B8E7BAFE85BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3307D33C-3E0D-4D69-85C4-B8E7BAFE85BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3307D33C-3E0D-4D69-85C4-B8E7BAFE85BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3307D33C-3E0D-4D69-85C4-B8E7BAFE85BD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {60ACB0A3-B326-4745-B2FF-46800EA4F0A2}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3307D33C-3E0D-4D69-85C4-B8E7BAFE85BD} = {870AA4BB-D49B-481F-ADD4-454FD5FAE867}
+	EndGlobalSection
+EndGlobal

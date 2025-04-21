@@ -28,7 +28,7 @@ public class RegistryClubServiceTests
     public async Task SaveMembershipDocument_ShouldThrowException_WhenAthletAlreadyInClub()
     {
         // Arrange
-        var document = new MembershipDocument { AthletID = 1, ClubID = 1 };
+        var document = CreateTestMembershipDocument();
         _registryClubRepositoryMock
             .Setup(repo => repo.GetByAthletIdFirstAsync(document.AthletID))
             .ReturnsAsync(new RegistryClub());
@@ -41,7 +41,7 @@ public class RegistryClubServiceTests
     public async Task SaveMembershipDocument_ShouldSave_WhenAthletNotInClub()
     {
         // Arrange
-        var document = new MembershipDocument { AthletID = 1, ClubID = 1 };
+        var document = CreateTestMembershipDocument();
         _registryClubRepositoryMock
             .Setup(repo => repo.GetByAthletIdFirstAsync(document.AthletID))
             .ReturnsAsync((RegistryClub?)null);
@@ -59,7 +59,7 @@ public class RegistryClubServiceTests
     public async Task SaveExclusionDocument_ShouldThrowException_WhenAthletNotInClub()
     {
         // Arrange
-        var document = new ExclusionDocument { AthletID = 1 };
+        var document = CreateTestExclusionDocument();
         _registryClubRepositoryMock
             .Setup(repo => repo.GetByAthletIdFirstAsync(document.AthletID))
             .ReturnsAsync((RegistryClub?)null);
@@ -72,7 +72,7 @@ public class RegistryClubServiceTests
     public async Task SaveExclusionDocument_ShouldSave_WhenAthletInClub()
     {
         // Arrange
-        var document = new ExclusionDocument { AthletID = 1 };
+        var document = CreateTestExclusionDocument();
         var registryClub = new RegistryClub { AthletID = 1, ClubID = 1 };
         _registryClubRepositoryMock
             .Setup(repo => repo.GetByAthletIdFirstAsync(document.AthletID))
@@ -92,7 +92,7 @@ public class RegistryClubServiceTests
     {
         // Arrange
         var clubId = 1L;
-        var athlets = new List<Athlet> { new Athlet { ID = 1 }, new Athlet { ID = 2 } };
+        var athlets = new List<Athlet> { CreateAthlet(1), CreateAthlet(2) };
         _registryClubRepositoryMock
             .Setup(repo => repo.GetAthletsByClubIdAsync(clubId))
             .ReturnsAsync(athlets);
@@ -102,5 +102,42 @@ public class RegistryClubServiceTests
 
         // Assert
         Assert.Equal(athlets, result);
+    }
+
+    private static Athlet CreateAthlet(long id)
+    {
+        return new Athlet
+        {
+            ID = id,
+            Fio = "Fio",
+            SportTypeID = 1,
+            ExpirenceWorkDays = 15
+        };
+    }
+
+    private static MembershipDocument CreateTestMembershipDocument()
+    {
+        return new MembershipDocument
+        {
+            AthletID = 1,
+            ClubID = 1,
+            Date = DateTime.Now,
+            Number = "test number",
+            CreatorId = 1,
+            Comment = "test comment"
+        };
+    }
+
+    private static ExclusionDocument CreateTestExclusionDocument()
+    {
+        return new ExclusionDocument
+        {
+            AthletID = 1,
+            ClubID = 1,
+            Date = DateTime.Now,
+            Number = "test number",
+            CreatorId = 1,
+            Comment = "test comment"
+        };
     }
 }
