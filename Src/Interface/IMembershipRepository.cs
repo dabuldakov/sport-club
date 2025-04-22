@@ -4,6 +4,6 @@ namespace SportClubApi.Interface;
 
 public interface IMembershipRepository
 {
-    public MembershipDocument Save(MembershipDocument document);
-    public void Delete(MembershipDocument document);
+    public Task<MembershipDocument> SaveAsync(MembershipDocument document);
+    public Task DeleteAsync(MembershipDocument document);
 }

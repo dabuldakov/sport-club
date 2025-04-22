@@ -10,16 +10,16 @@ public class RegistryClubRepository(ApplicationContext context) : IRegistryClubR
 {
     private readonly ApplicationContext _context = context;
 
-    public void Save(RegistryClub registryClub)
+    public async Task SaveAsync(RegistryClub registryClub)
     {
-        _context.RegistryClubs.Add(registryClub);
-        _context.SaveChanges();
+        await _context.RegistryClubs.AddAsync(registryClub);
+        await _context.SaveChangesAsync();
     }
 
-    public void Delete(RegistryClub registryClub)
+    public async Task DeleteAsync(RegistryClub registryClub)
     {
         _context.RegistryClubs.Remove(registryClub);
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
     }
 
     

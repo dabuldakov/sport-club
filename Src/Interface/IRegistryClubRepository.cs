@@ -7,8 +7,8 @@ namespace SportClubApi.Interface;
 public interface IRegistryClubRepository
 {
     
-    public void Save(RegistryClub registryClub);
-    public void Delete(RegistryClub registryClub);
+    public Task SaveAsync(RegistryClub registryClub);
+    public Task DeleteAsync(RegistryClub registryClub);
 
     public Task<RegistryClub?> GetByAthletIdFirstAsync(long athletId);
     public Task<List<Athlet>> GetAthletsByClubIdAsync(long clubId);

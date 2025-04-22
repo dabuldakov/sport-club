@@ -1,3 +1,4 @@
+using System.Transactions;
 using SportClubApi.Interface;
 using SportClubApi.Models;
 using SportClubApi.Models.Registry;
@@ -26,9 +27,12 @@ public class RegistryClubService(
         {
             throw new ArgumentException("Спортсмен уже добавлен в спортивный клуб.");
         }
-        //transaction
-        _membershipRepository.Save(document);
-        _registryClubRepository.Save(registry);
+        
+        using var transaction = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
+        await _membershipRepository.SaveAsync(document);
+        await _registryClubRepository.SaveAsync(registry);
+        transaction.Complete();
+
         return document;
     }
 
@@ -39,9 +43,12 @@ public class RegistryClubService(
         {
             throw new ArgumentException("Спортсмен не принадлежит спортивному клубу.");
         }
-        //transaction
-        _exclusionRepository.Save(document);
-        _registryClubRepository.Delete(found);
+
+        using var transaction = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
+        await _exclusionRepository.SaveAsync(document);
+        await _registryClubRepository.DeleteAsync(found);
+        transaction.Complete();
+        
         return document;
     }
 

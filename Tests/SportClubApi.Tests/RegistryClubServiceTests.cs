@@ -52,8 +52,8 @@ public class RegistryClubServiceTests
 
         // Assert
         Assert.Equal(document, result);
-        _membershipRepositoryMock.Verify(repo => repo.Save(document), Times.Once);
-        _registryClubRepositoryMock.Verify(repo => repo.Save(It.IsAny<RegistryClub>()), Times.Once);
+        _membershipRepositoryMock.Verify(repo => repo.SaveAsync(document), Times.Once);
+        _registryClubRepositoryMock.Verify(repo => repo.SaveAsync(It.IsAny<RegistryClub>()), Times.Once);
     }
 
     [Fact]
@@ -84,8 +84,8 @@ public class RegistryClubServiceTests
 
         // Assert
         Assert.Equal(document, result);
-        _exclusionRepositoryMock.Verify(repo => repo.Save(document), Times.Once);
-        _registryClubRepositoryMock.Verify(repo => repo.Delete(registryClub), Times.Once);
+        _exclusionRepositoryMock.Verify(repo => repo.SaveAsync(document), Times.Once);
+        _registryClubRepositoryMock.Verify(repo => repo.DeleteAsync(registryClub), Times.Once);
     }
 
     [Fact]

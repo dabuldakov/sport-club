@@ -8,16 +8,16 @@ public class ExcclusionRepository(ApplicationContext context) : IExclusionReposi
 {
     private readonly ApplicationContext _context = context;
 
-    public ExclusionDocument Save(ExclusionDocument document)
+    public async Task<ExclusionDocument> SaveAsync(ExclusionDocument document)
     {
-        _context.ExclusionDocuments.Add(document);
-        _context.SaveChanges();
+        await _context.ExclusionDocuments.AddAsync(document);
+        await _context.SaveChangesAsync();
         return document;
     }
 
-    public void Delete(ExclusionDocument document) {
+    public async Task DeleteAsync(ExclusionDocument document) {
         _context.ExclusionDocuments.Remove(document);
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
     }
 
 }

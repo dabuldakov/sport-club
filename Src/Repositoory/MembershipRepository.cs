@@ -8,14 +8,15 @@ public class MembershipRepository(ApplicationContext context) : IMembershipRepos
 {
     private readonly ApplicationContext _context = context;
 
-    public MembershipDocument Save(MembershipDocument document)
+    public async Task<MembershipDocument> SaveAsync(MembershipDocument document)
     {
-        _context.Set<MembershipDocument>().Add(document);
-        _context.SaveChanges();
+        await _context.MembershipDocuments.AddAsync(document);
+        await _context.SaveChangesAsync();
         return document;
     }
 
-    public void Delete(MembershipDocument document) {
-        _context.Set<MembershipDocument>().Remove(document);
+    public async Task DeleteAsync(MembershipDocument document) {
+        _context.MembershipDocuments.Remove(document);
+        await _context.SaveChangesAsync();
     }
 }
