@@ -20,13 +20,7 @@ public class RegistryClubService(
 
     public async Task<MembershipDocument> SaveMembershipDocument(MembershipDocument document)
     {
-        await ValidateAthletAndClubExistence(document.AthletID, document.ClubID);
-        var registry = new RegistryClub
-        {
-            AthletID = document.AthletID,
-            ClubID = document.ClubID,
-            CreateDate = DateTime.Now
-        };
+        await ValidateAthletAndClubExistence(document);
         var found = await _registryClubRepository.GetByAthletIdFirstAsync(document.AthletID);
         if (found != null)
         {
@@ -35,7 +29,7 @@ public class RegistryClubService(
 
         using var transaction = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
         await _membershipRepository.SaveAsync(document);
-        await _registryClubRepository.SaveAsync(registry);
+        await _registryClubRepository.SaveAsync(BuildRegistryClub(document));
         transaction.Complete();
 
         return document;
@@ -43,7 +37,7 @@ public class RegistryClubService(
 
     public async Task<ExclusionDocument> SaveExclusionDocument(ExclusionDocument document)
     {
-        await ValidateAthletAndClubExistence(document.AthletID, document.ClubID);
+        await ValidateAthletAndClubExistence(document);
         var found = await _registryClubRepository.GetByAthletIdFirstAsync(document.AthletID);
         if (found == null)
         {
@@ -63,18 +57,28 @@ public class RegistryClubService(
         return _registryClubRepository.GetAthletsByClubIdAsync(clubId);
     }
 
-    private async Task ValidateAthletAndClubExistence(long athletId, long clubId)
+    private async Task ValidateAthletAndClubExistence(RegistryDocument document)
     {
-        var athletExists = await _athletRepository.ExistAthletByIdAsync(athletId);
+        var athletExists = await _athletRepository.ExistAthletByIdAsync(document.AthletID);
         if (!athletExists)
         {
-            throw new ArgumentException($"Атлет с ID {athletId} не найден в базе данных.");
+            throw new ArgumentException($"Атлет с ID {document.AthletID} не найден в базе данных.");
         }
 
-        var clubExists = await _clubRepository.ExistClubByIdAsync(clubId);
+        var clubExists = await _clubRepository.ExistClubByIdAsync(document.ClubID);
         if (!clubExists)
         {
-            throw new ArgumentException($"Клуб с ID {clubId} не найден в базе данных.");
+            throw new ArgumentException($"Клуб с ID {document.ClubID} не найден в базе данных.");
         }
+    }
+
+    private RegistryClub BuildRegistryClub(MembershipDocument document)
+    {
+        return new RegistryClub
+        {
+            AthletID = document.AthletID,
+            ClubID = document.ClubID,
+            CreateDate = document.Date
+        };
     }
 }
