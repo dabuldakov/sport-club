@@ -8,14 +8,19 @@ namespace SportClubApi.Service;
 public class RegistryClubService(
     IMembershipRepository membershipRepository,
     IExclusionRepository excclusionRepository,
-    IRegistryClubRepository registryClubRepository)
+    IRegistryClubRepository registryClubRepository,
+    IAthletRepository athletRepository,
+    IClubRepository clubRepository)
 {
     private readonly IMembershipRepository _membershipRepository = membershipRepository;
     private readonly IExclusionRepository _exclusionRepository = excclusionRepository;
     private readonly IRegistryClubRepository _registryClubRepository = registryClubRepository;
+    private readonly IAthletRepository _athletRepository = athletRepository;
+    private readonly IClubRepository _clubRepository = clubRepository;
 
     public async Task<MembershipDocument> SaveMembershipDocument(MembershipDocument document)
     {
+        await ValidateAthletAndClubExistence(document.AthletID, document.ClubID);
         var registry = new RegistryClub
         {
             AthletID = document.AthletID,
@@ -27,7 +32,7 @@ public class RegistryClubService(
         {
             throw new ArgumentException("Спортсмен уже добавлен в спортивный клуб.");
         }
-        
+
         using var transaction = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
         await _membershipRepository.SaveAsync(document);
         await _registryClubRepository.SaveAsync(registry);
@@ -38,6 +43,7 @@ public class RegistryClubService(
 
     public async Task<ExclusionDocument> SaveExclusionDocument(ExclusionDocument document)
     {
+        await ValidateAthletAndClubExistence(document.AthletID, document.ClubID);
         var found = await _registryClubRepository.GetByAthletIdFirstAsync(document.AthletID);
         if (found == null)
         {
@@ -48,12 +54,27 @@ public class RegistryClubService(
         await _exclusionRepository.SaveAsync(document);
         await _registryClubRepository.DeleteAsync(found);
         transaction.Complete();
-        
+
         return document;
     }
 
     public Task<List<Athlet>> GetAthletsInClub(long clubId)
     {
         return _registryClubRepository.GetAthletsByClubIdAsync(clubId);
+    }
+
+    private async Task ValidateAthletAndClubExistence(long athletId, long clubId)
+    {
+        var athletExists = await _athletRepository.ExistAthletByIdAsync(athletId);
+        if (!athletExists)
+        {
+            throw new ArgumentException($"Атлет с ID {athletId} не найден в базе данных.");
+        }
+
+        var clubExists = await _clubRepository.ExistClubByIdAsync(clubId);
+        if (!clubExists)
+        {
+            throw new ArgumentException($"Клуб с ID {clubId} не найден в базе данных.");
+        }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.CookiePolicy;
 using Moq;
+using SportClubApi;
 using SportClubApi.Interface;
 using SportClubApi.Models;
 using SportClubApi.Models.Registry;
@@ -14,6 +15,8 @@ public class RegistryClubServiceTests
     private readonly Mock<IMembershipRepository> _membershipRepositoryMock = new();
     private readonly Mock<IExclusionRepository> _exclusionRepositoryMock = new();
     private readonly Mock<IRegistryClubRepository> _registryClubRepositoryMock = new();
+    private readonly Mock<IAthletRepository> _athletRepositoryMock = new();
+    private readonly Mock<IClubRepository> _clubRepositoryMock = new();
     private readonly RegistryClubService _service;
 
     public RegistryClubServiceTests()
@@ -21,7 +24,9 @@ public class RegistryClubServiceTests
         _service = new RegistryClubService(
             _membershipRepositoryMock.Object,
             _exclusionRepositoryMock.Object,
-            _registryClubRepositoryMock.Object
+            _registryClubRepositoryMock.Object,
+            _athletRepositoryMock.Object,
+            _clubRepositoryMock.Object
         );
     }
 
@@ -46,6 +51,14 @@ public class RegistryClubServiceTests
         _registryClubRepositoryMock
             .Setup(repo => repo.GetByAthletIdFirstAsync(document.AthletID))
             .ReturnsAsync((RegistryClub?)null);
+
+        _athletRepositoryMock
+        .Setup(repo => repo.ExistAthletByIdAsync(document.AthletID))
+        .ReturnsAsync(true);
+
+        _clubRepositoryMock
+        .Setup(repo => repo.ExistClubByIdAsync(document.ClubID))
+        .ReturnsAsync(true);
 
         // Act
         var result = await _service.SaveMembershipDocument(document);
@@ -78,6 +91,14 @@ public class RegistryClubServiceTests
         _registryClubRepositoryMock
             .Setup(repo => repo.GetByAthletIdFirstAsync(document.AthletID))
             .ReturnsAsync(registryClub);
+
+        _athletRepositoryMock
+        .Setup(repo => repo.ExistAthletByIdAsync(document.AthletID))
+        .ReturnsAsync(true);
+
+        _clubRepositoryMock
+        .Setup(repo => repo.ExistClubByIdAsync(document.ClubID))
+        .ReturnsAsync(true);
 
         // Act
         var result = await _service.SaveExclusionDocument(document);
